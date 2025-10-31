@@ -1,16 +1,28 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Exam } from "@/types/exam";
-import { Calendar, Clock, MapPin, User, BookOpen } from "lucide-react";
+import { Calendar, Clock, MapPin, BookOpen } from "lucide-react";
 import { format } from "date-fns";
 
 interface ExamCardProps {
-  exam: Exam;
+  exam: {
+    id: string;
+    courseCode: string;
+    courseName: string;
+    section: string;
+    date: string;
+    startTime: string;
+    endTime: string;
+    duration: number;
+    location: string;
+    instructor?: string;
+  };
   hasConflict?: boolean;
 }
 
 const ExamCard = ({ exam, hasConflict = false }: ExamCardProps) => {
   const formattedDate = format(new Date(exam.date), "EEEE, MMMM d, yyyy");
+  const startTime = exam.startTime.substring(0, 5); // Remove seconds
+  const endTime = exam.endTime.substring(0, 5);
   
   return (
     <Card className={`p-6 hover:shadow-lg transition-all duration-300 ${hasConflict ? 'border-destructive border-2' : ''}`}>
@@ -33,17 +45,12 @@ const ExamCard = ({ exam, hasConflict = false }: ExamCardProps) => {
           
           <div className="flex items-center gap-2 text-sm">
             <Clock className="w-4 h-4 text-accent" />
-            <span>{exam.startTime} - {exam.endTime}</span>
+            <span>{startTime} - {endTime}</span>
           </div>
           
-          <div className="flex items-center gap-2 text-sm">
+          <div className="flex items-center gap-2 text-sm md:col-span-2">
             <MapPin className="w-4 h-4 text-accent" />
             <span>{exam.location}</span>
-          </div>
-          
-          <div className="flex items-center gap-2 text-sm">
-            <User className="w-4 h-4 text-accent" />
-            <span>{exam.instructor}</span>
           </div>
         </div>
 
