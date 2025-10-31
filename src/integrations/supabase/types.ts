@@ -14,7 +14,98 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      exams: {
+        Row: {
+          course_code: string
+          course_name: string | null
+          created_at: string | null
+          duration_minutes: number
+          end_time: string
+          exam_date: string
+          id: string
+          location: string
+          section: string
+          start_time: string
+        }
+        Insert: {
+          course_code: string
+          course_name?: string | null
+          created_at?: string | null
+          duration_minutes: number
+          end_time: string
+          exam_date: string
+          id?: string
+          location: string
+          section: string
+          start_time: string
+        }
+        Update: {
+          course_code?: string
+          course_name?: string | null
+          created_at?: string | null
+          duration_minutes?: number
+          end_time?: string
+          exam_date?: string
+          id?: string
+          location?: string
+          section?: string
+          start_time?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string | null
+          full_name: string | null
+          id: string
+          student_number: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          full_name?: string | null
+          id: string
+          student_number?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          full_name?: string | null
+          id?: string
+          student_number?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      user_courses: {
+        Row: {
+          created_at: string | null
+          exam_id: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          exam_id: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          exam_id?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_courses_exam_id_fkey"
+            columns: ["exam_id"]
+            isOneToOne: false
+            referencedRelation: "exams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
